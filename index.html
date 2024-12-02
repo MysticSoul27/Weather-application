@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather ForeCast</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Protest+Revolution&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="pt-16 bg-center" id="main">
+        <div id="weather" class="container mx-auto drop-shadow-2xl backdrop-blur-md bg-white/30 p-8">
+            <h1 class="text-7xl text-white text-center p-2" style="font-family: 'Protest Revolution', sans-serif;">Weather at Glance</h1>
+            <div class="p-2 mt-2 container mx-auto flex flex-wrap justify-center">
+                <input type="text" name="city" id="city"
+                    class="block w-auto sm:w-3/5 py-1.5 pl-1 pr-3 text-base text-gray-950 rounded-md  placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                    placeholder="Enter a city name">
+                <button type="button" onclick="getWeatherDetails()" class="block p-2 ms-2 rounded-md bg-blue-700 text-white w-28 text-lg">Search</button>
+            </div>
+            <div id="result" class="mt-8 p-3 text-center">
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    
+    const getWeatherDetails = async () => {
+        console.log(city.value);
+        if(city.value){
+            //api call
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city.value}&APPID=29f5bae38793691305bac106fd7657a0`, {method: "GET"})
+            console.log(response);
+            if(response.status == 200){
+                const weatherDetails = await response.json()
+                console.log(weatherDetails);
+                result.innerHTML = `<h4 class="text-3xl font-bold text-white mb-3">${weatherDetails.name}</h4>
+                <p class="text-xl text-sky-900 font-bold">Longitude: ${weatherDetails.coord.lon}   Lattitude: ${weatherDetails.coord.lat}</p>
+                <div class="flex flex-wrap justify-evenly mt-8 p-3">
+                    <div id="temp" class="p-3 rounded-md shadow-xl backdrop-blur-md">
+                        <h5 class="text-xl font-bold text-white">Temp</h5>
+                        <p class="text-4xl text-blue-400 font-semibold">${(weatherDetails.main.temp-273.15).toFixed(2)} celcius</p>
+                        <p class="text-lg font-semibold text-white">Feels Like: ${(weatherDetails.main.feels_like-273.15).toFixed(2)} celcius</p>
+                        <p class="font-semibold text-white">Humidity: ${weatherDetails.main.humidity} %</p>
+                    </div>
+                    <div id="clouds" class="p-5 rounded-md shadow-xl backdrop-blur-md">
+                        <h5 class="text-2xl font-bold text-white">Weather</h5>
+                        <p class="text-4xl text-blue-400 font-medium">Mainly: ${weatherDetails.weather[0].main}</p>
+                        <p class="text-xl text-white text-semibold">${weatherDetails.weather[0].description}</p>
+                    </div>
+                    <div id="wind" class="p-5 rounded-md text-white shadow-xl backdrop-blur-md">
+                        <h5 class="text-xl font-bold">Wind</h5>
+                        <p class="font-semibold text-lg">Speed: ${weatherDetails.wind.speed} km/h</p>
+                        <p class="font-semibold text-lg">Degree: ${weatherDetails.wind.deg}</p>
+                    </div>
+                    <div id="sea" class="p-5 rounded-md shadow-xl backdrop-blur-md">
+                        <p class="font-semibold text-lg text-white">Ground level: ${weatherDetails.main.grnd_level}</p>
+                        <p class="font-semibold text-lg text-white">Sea level: ${weatherDetails.main.sea_level}</p>
+                    </div>
+                </div>`
+                
+            }else{
+                result.innerHTML = `<p class="text-rose-950 text-xl font-bold">Error city not found</p>`
+            }
+
+        }else{
+            result.innerHTML = `<p class="text-rose-950 text-xl font-bold">Please enter the city name!!!</p>`
+        }
+        
+    }
+    
+</script>
+
+</html>

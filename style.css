@@ -1,0 +1,61 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+#main{
+    height: 100vh;
+    background-image: url('./images/weather-3.jpg');
+    background-size: cover;
+
+}
+#weather{
+    width: 70%;
+    height: 90%;
+}
+#weather div button, #result {
+    font-family: "Dosis", sans-serif;
+}
+#temp{
+    background-image: url("./images/temp.jpg");
+    background-size: cover;
+    background-position: center;
+}
+#clouds{
+    background-image: url("./images/weather-1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+#wind{
+    background-image: url("./images/cyclone-wind.jpg");
+    background-size: cover;
+    background-position: center;
+}
+#sea{
+    background-image: url("./images/sea.jpg");
+    background-size: cover;
+    background-position: center;
+}
+@media (max-width: 1024px){
+    #weather h1{
+        font-size: 2rem;
+    }
+
+}
+
+@media (max-width: 567px){
+    #main{
+        height: 160vh;
+    }
+    #weather div button {
+        margin-top: 1rem;
+        width: 75px;
+    }
+    #result div div{
+        margin-top: 1rem;
+    }
+
+}
+
+
